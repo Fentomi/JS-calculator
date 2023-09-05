@@ -71,35 +71,44 @@ class Calculator {
         this.btn_multiply.onclick = () => this.addCharInEnterScreen('*');
         this.btn_minus.onclick = () => this.addCharInEnterScreen('-');
         this.btn_plus.onclick = () => this.addCharInEnterScreen('+');
-        this.btn_equal.onclick = () => this.calculateResult(this.enterString.textContent);
+        this.btn_equal.onclick = () => this.switchResultAndEnterStrings();
         this.btn_point.onclick = () => this.addCharInEnterScreen('.');
     }
     //add number in end enter-string
     addNumberInEnterScreen(number) {
         let string = this.enterString.textContent;
-        if(string.length === 1 && string === '0'){
-            this.enterString.textContent = '';
+
+        if(this.checkLengthEnterString(string)) {
+            if(string.length === 1 && string === '0'){
+                this.enterString.textContent = '';
+            }
+            this.enterString.textContent += number;
         }
-        this.enterString.textContent += number;
+        try{
+            this.calculateResult(this.enterString.textContent);
+        } catch{}
     }
     //add char in end enter-string
     addCharInEnterScreen(char) {
         let string = this.enterString.textContent;
-        if(char === '.') {
-            let pointCount = 0;
-            let charCount = 0;
-            for(let i = 0; i < string.length; i++){
-                string[i] === '.' ? pointCount++ : pointCount;
-                string[i] === '+' || string[i] === '-' || string[i] === '/' || string[i] === '*' || string[i] === '%' ? charCount++ : charCount;
+
+        if(this.checkLengthEnterString(string)) {
+            if(char === '.') {
+                let pointCount = 0;
+                let charCount = 0;
+                for(let i = 0; i < string.length; i++){
+                    string[i] === '.' ? pointCount++ : pointCount;
+                    string[i] === '+' || string[i] === '-' || string[i] === '/' || string[i] === '*' || string[i] === '%' ? charCount++ : charCount;
+                }
+                if(pointCount === charCount) this.enterString.textContent += '.';
             }
-            if(pointCount === charCount) this.enterString.textContent += '.';
-        }
-        else if(char === '-') {
-            if(string === '0') this.enterString.textContent = char;
-            else if(!UsefulFunctions.isCharNextTo(string)) this.enterString.textContent += char;
-        }
-        else {
-            if(!UsefulFunctions.isCharNextTo(string)) this.enterString.textContent += char;
+            else if(char === '-') {
+                if(string === '0') this.enterString.textContent = char;
+                else if(!UsefulFunctions.isCharNextTo(string)) this.enterString.textContent += char;
+            }
+            else {
+                if(!UsefulFunctions.isCharNextTo(string)) this.enterString.textContent += char;
+            }
         }
     }
     //clear enter-string
@@ -112,6 +121,10 @@ class Calculator {
         if(this.enterString.textContent === '') {
             this.enterString.textContent = '0'; 
         }
+        try{
+            this.calculateResult(this.enterString.textContent);
+        }
+        catch{}
     }
     //function-help with calculateResult
     calcPara(char, temp = 0, numbers = [], result) {
@@ -151,42 +164,56 @@ class Calculator {
         
         this.resultString.textContent = result;
     }
+    checkLengthEnterString = (string) => { return string.length <= 14 ? true : false; }
+    switchResultAndEnterStrings() {
+        this.enterString.textContent = this.resultString.textContent;
+    }
 }
 
 const calculator = new Calculator();
 
 //interactive with user keyboard
 document.addEventListener('keydown', function(event) {
-    switch(event.code) {
-        case 'Minus': calculator.addCharInEnterScreen('-'); break;
-        case ('ShiftLeft' && 'Equal'): calculator.addCharInEnterScreen('+'); break;
-        case ('ShiftLeft' && 'Digit8'): calculator.addCharInEnterScreen('*'); break;
-        case 'Slash': calculator.addCharInEnterScreen('/'); break;
+    let isMultiplyAndPlusEnter = false;
 
-        case 'Digit0': calculator.addNumberInEnterScreen('0'); break;
-        case 'Numpad0': calculator.addNumberInEnterScreen('0'); break;
-        case 'Digit1': calculator.addNumberInEnterScreen('1'); break;
-        case 'Numpad1': calculator.addNumberInEnterScreen('1'); break;
-        case 'Digit2': calculator.addNumberInEnterScreen('2'); break;
-        case 'Numpad2': calculator.addNumberInEnterScreen('2'); break;
-        case 'Digit3': calculator.addNumberInEnterScreen('3'); break;
-        case 'Numpad3': calculator.addNumberInEnterScreen('3'); break;
-        case 'Digit4': calculator.addNumberInEnterScreen('4'); break;
-        case 'Numpad4': calculator.addNumberInEnterScreen('4'); break;
-        case 'Digit5': calculator.addNumberInEnterScreen('5'); break;
-        case 'Numpad5': calculator.addNumberInEnterScreen('5'); break;
-        case 'Digit6': calculator.addNumberInEnterScreen('6'); break;
-        case 'Numpad6': calculator.addNumberInEnterScreen('6'); break;
-        case 'Digit7': calculator.addNumberInEnterScreen('7'); break;
-        case 'Numpad7': calculator.addNumberInEnterScreen('7'); break;
-        case 'Digit8': calculator.addNumberInEnterScreen('8'); break;
-        case 'Numpad8': calculator.addNumberInEnterScreen('8'); break;
-        case 'Digit9': calculator.addNumberInEnterScreen('9'); break;
-        case 'Numpad9': calculator.addNumberInEnterScreen('9'); break;
+    if(event.shiftKey && event.code === 'Equal') {
+        calculator.addCharInEnterScreen('+');
+        isMultiplyAndPlusEnter = true; 
+    } else if(event.shiftKey && event.code === 'Digit8') {
+        calculator.addCharInEnterScreen('*');
+        isMultiplyAndPlusEnter = true; 
+    }
 
-        case 'Backspace': calculator.delLastNumberInEnterScreen(); break;
-        case 'KeyC': calculator.clearEnterScreen(); break;
-
-        case 'Enter': calculator.calculateResult(calculator.enterString.textContent); break;
+    if(!isMultiplyAndPlusEnter) {
+        switch(event.code) {
+            case 'Digit0': calculator.addNumberInEnterScreen('0'); break;
+            case 'Numpad0': calculator.addNumberInEnterScreen('0'); break;
+            case 'Digit1': calculator.addNumberInEnterScreen('1'); break;
+            case 'Numpad1': calculator.addNumberInEnterScreen('1'); break;
+            case 'Digit2': calculator.addNumberInEnterScreen('2'); break;
+            case 'Numpad2': calculator.addNumberInEnterScreen('2'); break;
+            case 'Digit3': calculator.addNumberInEnterScreen('3'); break;
+            case 'Numpad3': calculator.addNumberInEnterScreen('3'); break;
+            case 'Digit4': calculator.addNumberInEnterScreen('4'); break;
+            case 'Numpad4': calculator.addNumberInEnterScreen('4'); break;
+            case 'Digit5': calculator.addNumberInEnterScreen('5'); break;
+            case 'Numpad5': calculator.addNumberInEnterScreen('5'); break;
+            case 'Digit6': calculator.addNumberInEnterScreen('6'); break;
+            case 'Numpad6': calculator.addNumberInEnterScreen('6'); break;
+            case 'Digit7': calculator.addNumberInEnterScreen('7'); break;
+            case 'Numpad7': calculator.addNumberInEnterScreen('7'); break;
+            case 'Digit8': calculator.addNumberInEnterScreen('8'); break;
+            case 'Numpad8': calculator.addNumberInEnterScreen('8'); break;
+            case 'Digit9': calculator.addNumberInEnterScreen('9'); break;
+            case 'Numpad9': calculator.addNumberInEnterScreen('9'); break;
+    
+            case 'Backspace': calculator.delLastNumberInEnterScreen(); break;
+            case 'KeyC': calculator.clearEnterScreen(); break;
+            
+            case 'Minus': calculator.addCharInEnterScreen('-'); break;
+            case 'Slash': calculator.addCharInEnterScreen('/'); break;
+    
+            case 'Enter': calculator.switchResultAndEnterStrings(); break;
+        }
     }
 });
