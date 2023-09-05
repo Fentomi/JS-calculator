@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Calculator</title>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="content-wrapper">
@@ -28,26 +29,106 @@
                 <div class="calculator-top__btn-history-and-deg"></div>
             </div>
             <div class="calculator-bot">
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
-                <div class="button"></div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="c">c</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="%">%</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="backspace"></button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="divide"></button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="1">1</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="2">2</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="3">3</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="multiply"></button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="4">4</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="5">5</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="6">6</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="minus"></button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="7">7</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="8">8</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="9">9</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="plus"></button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="00">00</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="0">0</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id=".">.</button>
+                    </div>
+                </div>
+                <div class="calculator-bot__button">
+                    <div class="button__image">
+                        <button class="button__text" id="equal"></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
